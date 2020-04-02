@@ -1,0 +1,12 @@
+
+# .ldf file created by fe-safe compliant product 6.2-01[mswin]
+
+INIT
+END
+
+# Block number 1
+BLOCK n=1, scale=1
+ds=1, de=2
+ds=3, de=4
+END
+
