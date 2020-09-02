@@ -1,5 +1,5 @@
 # -*- coding: cp1251 -*-
-'''компоненти для побудови моделі'''
+'''ГЄГ®Г¬ГЇГ®Г­ГҐГ­ГІГЁ Г¤Г«Гї ГЇГ®ГЎГіГ¤Г®ГўГЁ Г¬Г®Г¤ГҐГ«Ві'''
 from math import *
 from part import *
 from material import *
@@ -21,27 +21,27 @@ if _my_thread_model==3: openMdb(pathName='C:/Temp/nkt.cae')
 model=mdb.models['Model-1']
 
 class Dim:
-    "Клас описує поняття розміру"
-    n=0.0 #номінальний розмір
-    ei=0.0 #нижнє відхилення
-    es=0.0 #верхнє відхилення
-    v=0.0 #дійсне значення
+    "ГЉГ«Г Г± Г®ГЇГЁГ±ГіВє ГЇГ®Г­ГїГІГІГї Г°Г®Г§Г¬ВіГ°Гі"
+    n=0.0 #Г­Г®Г¬ВіГ­Г Г«ГјГ­ГЁГ© Г°Г®Г§Г¬ВіГ°
+    ei=0.0 #Г­ГЁГ¦Г­Вє ГўВіГ¤ГµГЁГ«ГҐГ­Г­Гї
+    es=0.0 #ГўГҐГ°ГµГ­Вє ГўВіГ¤ГµГЁГ«ГҐГ­Г­Гї
+    v=0.0 #Г¤ВіГ©Г±Г­ГҐ Г§Г­Г Г·ГҐГ­Г­Гї
     def __init__(self,*x):
-        "конструктор, x-кортеж"
+        "ГЄГ®Г­Г±ГІГ°ГіГЄГІГ®Г°, x-ГЄГ®Г°ГІГҐГ¦"
         self.n=x[0][0]
         self.ei=x[0][1]
         self.es=x[0][2]
     def min(self):
-        "повертає мінімальний розмір"
+        "ГЇГ®ГўГҐГ°ГІГ Вє Г¬ВіГ­ВіГ¬Г Г«ГјГ­ГЁГ© Г°Г®Г§Г¬ВіГ°"
         return self.n+self.ei
     def max(self):
-        "повертає максимальний розмір"
+        "ГЇГ®ГўГҐГ°ГІГ Вє Г¬Г ГЄГ±ГЁГ¬Г Г«ГјГ­ГЁГ© Г°Г®Г§Г¬ВіГ°"
         return self.n+self.es
 class Line(object):
-    '''Лінія (відрізок або пряма)
-    p1,p2 - перша і друга точки
-    len - довжина
-    angle - кут до 0X в градусах
+    '''Г‹ВіГ­ВіГї (ГўВіГ¤Г°ВіГ§Г®ГЄ Г ГЎГ® ГЇГ°ГїГ¬Г )
+    p1,p2 - ГЇГҐГ°ГёГ  Ві Г¤Г°ГіГЈГ  ГІГ®Г·ГЄГЁ
+    len - Г¤Г®ГўГ¦ГЁГ­Г 
+    angle - ГЄГіГІ Г¤Г® 0X Гў ГЈГ°Г Г¤ГіГ±Г Гµ
     '''
     def __init__(self,p1,p2=None,len=None,angle=None):
         self.p1=p1
@@ -55,52 +55,52 @@ class Line(object):
         else:
             self.p2=p2
         x2,y2=self.p2[0],self.p2[1]
-        #коефіцієнти рівняння Ax+By+C=0
+        #ГЄГ®ГҐГґВіГ¶ВіВєГ­ГІГЁ Г°ВіГўГ­ГїГ­Г­Гї Ax+By+C=0
         self.A=y1-y2
         self.B=x2-x1
         self.C=x1*y2-x2*y1
     def points(self):
-        '''повертає x1,y1,x2,y2'''
+        '''ГЇГ®ГўГҐГ°ГІГ Вє x1,y1,x2,y2'''
         return self.p1[0],self.p1[1],self.p2[0],self.p2[1]
     def angleOX(self):
-        '''кут нахилу до ox в радіанах'''
+        '''ГЄГіГІ Г­Г ГµГЁГ«Гі Г¤Г® ox Гў Г°Г Г¤ВіГ Г­Г Гµ'''
         return atan(-self.A/self.B)    
     def len(self):
-        '''довжина'''
+        '''Г¤Г®ГўГ¦ГЁГ­Г '''
         x1,y1,x2,y2=self.points()
         return sqrt((y2-y1)**2+(x2-x1)**2)
     def x(self,y):
-        '''координата x точки лінії за координатою y'''
+        '''ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГ  x ГІГ®Г·ГЄГЁ Г«ВіГ­ВіВї Г§Г  ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГ®Гѕ y'''
         x1,y1,x2,y2=self.points()
         return (y-y1)*(x2-x1)/(y2-y1)+x1#x
     def y(self,x):
-        '''координата y точки лінії за координатою x'''
+        '''ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГ  y ГІГ®Г·ГЄГЁ Г«ВіГ­ВіВї Г§Г  ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГ®Гѕ x'''
         x1,y1,x2,y2=self.points()
         return (x-x1)*(y2-y1)/(x2-x1)+y1#y
     def mpoint(self):
-        '''середня точка'''
+        '''Г±ГҐГ°ГҐГ¤Г­Гї ГІГ®Г·ГЄГ '''
         x1,y1,x2,y2=self.points()
         return ((x2-x1)/2+x1,(y2-y1)/2+y1)
     def dist(self,point):
-        '''відстань від лінії до точки point'''
+        '''ГўВіГ¤Г±ГІГ Г­Гј ГўВіГ¤ Г«ВіГ­ВіВї Г¤Г® ГІГ®Г·ГЄГЁ point'''
         x,y=point[0],point[1]
         return abs((self.A*x+self.B*y+self.C)/sqrt(self.A**2+self.B**2))
     def cros_point(self,line):
-        '''точка перетину з лінією line'''
+        '''ГІГ®Г·ГЄГ  ГЇГҐГ°ГҐГІГЁГ­Гі Г§ Г«ВіГ­ВіВєГѕ line'''
         x=(self.B*line.C-line.B*self.C)/(self.A*line.B-line.A*self.B)
         y=(self.C*line.A-line.C*self.A)/(self.A*line.B-line.A*self.B)
         return (x,y)
     def drawAbaqus(self,sketch):
-        '''рисувати в Abaqus'''
+        '''Г°ГЁГ±ГіГўГ ГІГЁ Гў Abaqus'''
         g=sketch.Line(point1=self.p1, point2=self.p2)
         return g
              
 class N_angle(object):
-    '''N-кутник зі скругленнями
-    L - список ліній (по порядку)
-    R - список радіусів скруглень (по порядку).
-    Наприклад, R[0] - скруглення між L[0] і L[1]
-    Приклад:
+    '''N-ГЄГіГІГ­ГЁГЄ Г§Ві Г±ГЄГ°ГіГЈГ«ГҐГ­Г­ГїГ¬ГЁ
+    L - Г±ГЇГЁГ±Г®ГЄ Г«ВіГ­ВіГ© (ГЇГ® ГЇГ®Г°ГїГ¤ГЄГі)
+    R - Г±ГЇГЁГ±Г®ГЄ Г°Г Г¤ВіГіГ±ВіГў Г±ГЄГ°ГіГЈГ«ГҐГ­Гј (ГЇГ® ГЇГ®Г°ГїГ¤ГЄГі).
+    ГЌГ ГЇГ°ГЁГЄГ«Г Г¤, R[0] - Г±ГЄГ°ГіГЈГ«ГҐГ­Г­Гї Г¬ВіГ¦ L[0] Ві L[1]
+    ГЏГ°ГЁГЄГ«Г Г¤:
     L1=Line(p1=(1.0,1.0),len=2.0,angle=170)
     cp=Line(p1=L1.p1,angle=90+30).cros_point(Line(p1=L1.p2,angle=90-30))
     L2=Line(p1=L1.p1,p2=cp)
@@ -108,92 +108,92 @@ class N_angle(object):
     T1=N_angle([L1,L2,L3],[0.05,0.05,0.05])
     '''
     def __init__(self,L,R):
-        self.N=len(L)#кількість ліній (кутів)
-        L.append(L[0])#добавити в список ліній першу: [L1,L2,L3,L1]
-        self.V=range(self.N)#список вершин
+        self.N=len(L)#ГЄВіГ«ГјГЄВіГ±ГІГј Г«ВіГ­ВіГ© (ГЄГіГІВіГў)
+        L.append(L[0])#Г¤Г®ГЎГ ГўГЁГІГЁ Гў Г±ГЇГЁГ±Г®ГЄ Г«ВіГ­ВіГ© ГЇГҐГ°ГёГі: [L1,L2,L3,L1]
+        self.V=range(self.N)#Г±ГЇГЁГ±Г®ГЄ ГўГҐГ°ГёГЁГ­
         for i in range(self.N):
             self.V[i]=self.Vert(L[i],L[i+1],R[i])
     def Vert(self,La,Lb,R):
-        '''повертає вершину в форматі:
-        (точка, перша лінія, друга лінія, радіус скруглення).
-        Якщо перша точка першої лінії співпадає з першою
-        або другою точкою другої лінії, то вона є вершиною'''
+        '''ГЇГ®ГўГҐГ°ГІГ Вє ГўГҐГ°ГёГЁГ­Гі Гў ГґГ®Г°Г¬Г ГІВі:
+        (ГІГ®Г·ГЄГ , ГЇГҐГ°ГёГ  Г«ВіГ­ВіГї, Г¤Г°ГіГЈГ  Г«ВіГ­ВіГї, Г°Г Г¤ВіГіГ± Г±ГЄГ°ГіГЈГ«ГҐГ­Г­Гї).
+        ГџГЄГ№Г® ГЇГҐГ°ГёГ  ГІГ®Г·ГЄГ  ГЇГҐГ°ГёГ®Вї Г«ВіГ­ВіВї Г±ГЇВіГўГЇГ Г¤Г Вє Г§ ГЇГҐГ°ГёГ®Гѕ
+        Г ГЎГ® Г¤Г°ГіГЈГ®Гѕ ГІГ®Г·ГЄГ®Гѕ Г¤Г°ГіГЈГ®Вї Г«ВіГ­ВіВї, ГІГ® ГўГ®Г­Г  Вє ГўГҐГ°ГёГЁГ­Г®Гѕ'''
         if La.p1==Lb.p1 or La.p1==Lb.p2:
             V=(La.p1,La,Lb,R)
         else: V=(Lb.p2,La,Lb,R)
         return V
     def drawAbaqus(self,sketch):
-        '''рисувати в Abaqus'''
+        '''Г°ГЁГ±ГіГўГ ГІГЁ Гў Abaqus'''
         g=range(self.N)
-        for i in range(self.N):#рисувати лінії
+        for i in range(self.N):#Г°ГЁГ±ГіГўГ ГІГЁ Г«ВіГ­ВіВї
             g[i]=self.V[i][1].drawAbaqus(sketch)
-        g.append(g[0])#добавити в список ліній першу: [g1,g2,g3,g1]
-        for i in range(self.N):#рисувати скруглення
-            if self.V[i][3]!=0:#якщо радіус скруглення не 0
+        g.append(g[0])#Г¤Г®ГЎГ ГўГЁГІГЁ Гў Г±ГЇГЁГ±Г®ГЄ Г«ВіГ­ВіГ© ГЇГҐГ°ГёГі: [g1,g2,g3,g1]
+        for i in range(self.N):#Г°ГЁГ±ГіГўГ ГІГЁ Г±ГЄГ°ГіГЈГ«ГҐГ­Г­Гї
+            if self.V[i][3]!=0:#ГїГЄГ№Г® Г°Г Г¤ВіГіГ± Г±ГЄГ°ГіГЈГ«ГҐГ­Г­Гї Г­ГҐ 0
                 sketch.FilletByRadius(curve1=g[i], curve2=g[i+1], nearPoint1=self.V[i][1].mpoint(), nearPoint2=self.V[i][2].mpoint(), radius=self.V[i][3]) 
 
 class Material:
-    '''Клас описує поняття матеріалу
-    В Abaqus задається істинна діаграма деформування (див.Stress and strain measures)
-    E - модуль пружності, Па
-    mu - коефіцієнт Пуассона
-    st - границя текучості, Па
-    et - деформація для st
-    sb - істинна границя міцності, Па (sv - умовна границя)
-    eb - істинна деформація, яка відповідає границі міцності
-    delta - відносне видовження
-    psi - відносне звуження
+    '''ГЉГ«Г Г± Г®ГЇГЁГ±ГіВє ГЇГ®Г­ГїГІГІГї Г¬Г ГІГҐГ°ВіГ Г«Гі
+    Г‚ Abaqus Г§Г Г¤Г ВєГІГјГ±Гї ВіГ±ГІГЁГ­Г­Г  Г¤ВіГ ГЈГ°Г Г¬Г  Г¤ГҐГґГ®Г°Г¬ГіГўГ Г­Г­Гї (Г¤ГЁГў.Stress and strain measures)
+    E - Г¬Г®Г¤ГіГ«Гј ГЇГ°ГіГ¦Г­Г®Г±ГІВі, ГЏГ 
+    mu - ГЄГ®ГҐГґВіГ¶ВіВєГ­ГІ ГЏГіГ Г±Г±Г®Г­Г 
+    st - ГЈГ°Г Г­ГЁГ¶Гї ГІГҐГЄГіГ·Г®Г±ГІВі, ГЏГ 
+    et - Г¤ГҐГґГ®Г°Г¬Г Г¶ВіГї Г¤Г«Гї st
+    sb - ВіГ±ГІГЁГ­Г­Г  ГЈГ°Г Г­ГЁГ¶Гї Г¬ВіГ¶Г­Г®Г±ГІВі, ГЏГ  (sv - ГіГ¬Г®ГўГ­Г  ГЈГ°Г Г­ГЁГ¶Гї)
+    eb - ВіГ±ГІГЁГ­Г­Г  Г¤ГҐГґГ®Г°Г¬Г Г¶ВіГї, ГїГЄГ  ГўВіГ¤ГЇГ®ГўВіГ¤Г Вє ГЈГ°Г Г­ГЁГ¶Ві Г¬ВіГ¶Г­Г®Г±ГІВі
+    delta - ГўВіГ¤Г­Г®Г±Г­ГҐ ГўГЁГ¤Г®ГўГ¦ГҐГ­Г­Гї
+    psi - ГўВіГ¤Г­Г®Г±Г­ГҐ Г§ГўГіГ¦ГҐГ­Г­Гї
     '''
     def __init__(self,E,mu,st,sv,delta,psi):
-        '''конструктор'''
-        self.E=E#модуль пружності
-        self.mu=mu#коефіцієнт Пуассона
-        self.st=st#границя текучості
-        self.et=st/E#деформація для st
-        self.delta=delta/100.0#відносне видовження після розриву
-        self.psi=psi/100.0#відносне звуження після розриву
-        k=0.4#коефіцієнт(eb=(0.1...0.4,0.2...0.8)delta)
-        self.sv=sv#границя міцності
-        self.sb=sv*(1+k*self.delta)#істинна границя міцності 
-        self.eb=log(1+k*self.delta)#істинна деформація, яка відповідає границі міцності
-        #істинне напруження і деформація в момент руйнування
-        self.sk=0.8*self.sv/(1-self.psi)#0.8-коефіцієнт руйнуючого навантаження
+        '''ГЄГ®Г­Г±ГІГ°ГіГЄГІГ®Г°'''
+        self.E=E#Г¬Г®Г¤ГіГ«Гј ГЇГ°ГіГ¦Г­Г®Г±ГІВі
+        self.mu=mu#ГЄГ®ГҐГґВіГ¶ВіВєГ­ГІ ГЏГіГ Г±Г±Г®Г­Г 
+        self.st=st#ГЈГ°Г Г­ГЁГ¶Гї ГІГҐГЄГіГ·Г®Г±ГІВі
+        self.et=st/E#Г¤ГҐГґГ®Г°Г¬Г Г¶ВіГї Г¤Г«Гї st
+        self.delta=delta/100.0#ГўВіГ¤Г­Г®Г±Г­ГҐ ГўГЁГ¤Г®ГўГ¦ГҐГ­Г­Гї ГЇВіГ±Г«Гї Г°Г®Г§Г°ГЁГўГі
+        self.psi=psi/100.0#ГўВіГ¤Г­Г®Г±Г­ГҐ Г§ГўГіГ¦ГҐГ­Г­Гї ГЇВіГ±Г«Гї Г°Г®Г§Г°ГЁГўГі
+        k=0.4#ГЄГ®ГҐГґВіГ¶ВіВєГ­ГІ(eb=(0.1...0.4,0.2...0.8)delta)
+        self.sv=sv#ГЈГ°Г Г­ГЁГ¶Гї Г¬ВіГ¶Г­Г®Г±ГІВі
+        self.sb=sv*(1+k*self.delta)#ВіГ±ГІГЁГ­Г­Г  ГЈГ°Г Г­ГЁГ¶Гї Г¬ВіГ¶Г­Г®Г±ГІВі 
+        self.eb=log(1+k*self.delta)#ВіГ±ГІГЁГ­Г­Г  Г¤ГҐГґГ®Г°Г¬Г Г¶ВіГї, ГїГЄГ  ГўВіГ¤ГЇГ®ГўВіГ¤Г Вє ГЈГ°Г Г­ГЁГ¶Ві Г¬ВіГ¶Г­Г®Г±ГІВі
+        #ВіГ±ГІГЁГ­Г­ГҐ Г­Г ГЇГ°ГіГ¦ГҐГ­Г­Гї Ві Г¤ГҐГґГ®Г°Г¬Г Г¶ВіГї Гў Г¬Г®Г¬ГҐГ­ГІ Г°ГіГ©Г­ГіГўГ Г­Г­Гї
+        self.sk=0.8*self.sv/(1-self.psi)#0.8-ГЄГ®ГҐГґВіГ¶ВіВєГ­ГІ Г°ГіГ©Г­ГіГѕГ·Г®ГЈГ® Г­Г ГўГ Г­ГІГ Г¦ГҐГ­Г­Гї
         #self.sk=self.sv*(1+1.35*self.psi)
         self.ek=log(1/(1-self.psi))
     def bilinear(self):
-        '''Повертає словник елестичних і пластичних властивостей'''
+        '''ГЏГ®ГўГҐГ°ГІГ Вє Г±Г«Г®ГўГ­ГЁГЄ ГҐГ«ГҐГ±ГІГЁГ·Г­ГЁГµ Ві ГЇГ«Г Г±ГІГЁГ·Г­ГЁГµ ГўГ«Г Г±ГІГЁГўГ®Г±ГІГҐГ©'''
         return {'el':((self.E,self.mu),),
-                'pl':((self.st,0.0),#білінійна залежність
-                (self.sb,self.eb))}#або (self.sk,self.ek)
+                'pl':((self.st,0.0),#ГЎВіГ«ВіГ­ВіГ©Г­Г  Г§Г Г«ГҐГ¦Г­ВіГ±ГІГј
+                (self.sb,self.eb))}#Г ГЎГ® (self.sk,self.ek)
     def e(self,s,n):
-        '''Степенева залежність e(s)
-        n - степінь
+        '''Г‘ГІГҐГЇГҐГ­ГҐГўГ  Г§Г Г«ГҐГ¦Г­ВіГ±ГІГј e(s)
+        n - Г±ГІГҐГЇВіГ­Гј
         '''
         return self.et*(s/self.st)**n
     def power(self,k):
-        '''Повертає словник елестичних і пластичних властивостей
-        k - кількість ліній для апроксимації пластичної ділянки (2,4,8...)
+        '''ГЏГ®ГўГҐГ°ГІГ Вє Г±Г«Г®ГўГ­ГЁГЄ ГҐГ«ГҐГ±ГІГЁГ·Г­ГЁГµ Ві ГЇГ«Г Г±ГІГЁГ·Г­ГЁГµ ГўГ«Г Г±ГІГЁГўГ®Г±ГІГҐГ©
+        k - ГЄВіГ«ГјГЄВіГ±ГІГј Г«ВіГ­ВіГ© Г¤Г«Гї Г ГЇГ°Г®ГЄГ±ГЁГ¬Г Г¶ВіВї ГЇГ«Г Г±ГІГЁГ·Г­Г®Вї Г¤ВіГ«ГїГ­ГЄГЁ (2,4,8...)
         '''
-        #n визначається з умови проходження через точку (eb+et,sb), n=6...10
+        #n ГўГЁГ§Г­Г Г·Г ВєГІГјГ±Гї Г§ ГіГ¬Г®ГўГЁ ГЇГ°Г®ГµГ®Г¤Г¦ГҐГ­Г­Гї Г·ГҐГ°ГҐГ§ ГІГ®Г·ГЄГі (eb+et,sb), n=6...10
         n=log((self.eb+self.et)/self.et)/log(self.sb/self.st)
         ds=self.sb-self.st
-        #степенева залежність
+        #Г±ГІГҐГЇГҐГ­ГҐГўГ  Г§Г Г«ГҐГ¦Г­ВіГ±ГІГј
         k_=float(k)
         s_e=[(self.st+i/k_*ds,self.e(self.st+i/k_*ds,n)-self.et) for i in range(0,k+1)]
         #s_e=[(self.st+i*ds,self.e(self.st+i*ds,n)-self.et) for i in [0.0,0.25,0.5,0.75,1.0]]
-        s_e.append((self.sk,self.ek))#добавити точку руйнування
+        s_e.append((self.sk,self.ek))#Г¤Г®ГЎГ ГўГЁГІГЁ ГІГ®Г·ГЄГі Г°ГіГ©Г­ГіГўГ Г­Г­Гї
         return {'el':((self.E,self.mu),),
                 'pl':tuple(s_e)}
 
 matlib={
 '40':Material(E=210000.0e+6,mu=0.28,st=314.0e+6,sv=559.0e+6,delta=16.0,psi=45.0),
 '40fesafe':Material(E=200000.0e+6,mu=0.33,st=314.0e+6,sv=559.0e+6,delta=16.0,psi=45.0),
-'20Н2М':Material(E=210000.0e+6,mu=0.28,st=382.0e+6,sv=588.0e+6,delta=21.0,psi=56.0),
-'30ХМА':Material(E=210000.0e+6,mu=0.28,st=392.0e+6,sv=598.0e+6,delta=20.0,psi=62.0),
-'15Н3МА':Material(E=210000.0e+6,mu=0.28,st=490.0e+6,sv=637.0e+6,delta=22.0,psi=60.0),
-'15Х2НМФ':Material(E=210000.0e+6,mu=0.28,st=617.0e+6,sv=686.0e+6,delta=16.0,psi=63.0),
-'15Х2ГМФ':Material(E=210000.0e+6,mu=0.28,st=617.0e+6,sv=686.0e+6,delta=16.0,psi=63.0),
-'14Х3ГМЮ':Material(E=210000.0e+6,mu=0.28,st=617.0e+6,sv=725.0e+6,delta=16.0,psi=63.0),
+'20ГЌ2ГЊ':Material(E=210000.0e+6,mu=0.28,st=382.0e+6,sv=588.0e+6,delta=21.0,psi=56.0),
+'30Г•ГЊГЂ':Material(E=210000.0e+6,mu=0.28,st=392.0e+6,sv=598.0e+6,delta=20.0,psi=62.0),
+'15ГЌ3ГЊГЂ':Material(E=210000.0e+6,mu=0.28,st=490.0e+6,sv=637.0e+6,delta=22.0,psi=60.0),
+'15Г•2ГЌГЊГ”':Material(E=210000.0e+6,mu=0.28,st=617.0e+6,sv=686.0e+6,delta=16.0,psi=63.0),
+'15Г•2ГѓГЊГ”':Material(E=210000.0e+6,mu=0.28,st=617.0e+6,sv=686.0e+6,delta=16.0,psi=63.0),
+'14Г•3ГѓГЊГћ':Material(E=210000.0e+6,mu=0.28,st=617.0e+6,sv=725.0e+6,delta=16.0,psi=63.0),
 }
 steel20={'el':((210000000000.0, 0.28), ),
                'pl':((620000000.0, 0.0),
@@ -209,17 +209,17 @@ steel45={'el':((210000000000.0, 0.28), ),
                      (864000000.0, 0.11))}
 
 def delCutExtrude():
-    "Знищує усі елементи, назва яких починається з 'Cut extrude' і 'Partition face-1'"
+    "Г‡Г­ГЁГ№ГіВє ГіГ±Ві ГҐГ«ГҐГ¬ГҐГ­ГІГЁ, Г­Г Г§ГўГ  ГїГЄГЁГµ ГЇГ®Г·ГЁГ­Г ВєГІГјГ±Гї Г§ 'Cut extrude' Ві 'Partition face-1'"
     if model.parts['Part-2'].features.has_key('Partition face-1'):
-        del model.parts['Part-2'].features['Partition face-1']  #знищує Partition face
+        del model.parts['Part-2'].features['Partition face-1']  #Г§Г­ГЁГ№ГіВє Partition face
     for f in model.parts['Part-1'].features.values():
         if f.name[:11]=='Cut extrude': model.parts['Part-1'].deleteFeatures((f.name,))
     for f in model.parts['Part-2'].features.values():
         if f.name[:11]=='Cut extrude': model.parts['Part-2'].deleteFeatures((f.name,))
 def set_values(sketch,p):
     '''
-    Присвоює значення параметрам ескіза'
-    Приклад:
+    ГЏГ°ГЁГ±ГўГ®ГѕВє Г§Г­Г Г·ГҐГ­Г­Гї ГЇГ Г°Г Г¬ГҐГІГ°Г Г¬ ГҐГ±ГЄВіГ§Г '
+    ГЏГ°ГЁГЄГ«Г Г¤:
     par={'aint':0,'aext':0,'Rint':0,'Rext':dn.v,'len':l1n.v+20}
     set_values(sketch='nipple',p=par)
     '''
@@ -228,8 +228,8 @@ def set_values(sketch,p):
         s.parameters[k].setValues(expression=str(v))
 def set_values2(sketch,base,p):
     '''
-    Присвоює значення параметрам ескіза'
-    Приклад:
+    ГЏГ°ГЁГ±ГўГ®ГѕВє Г§Г­Г Г·ГҐГ­Г­Гї ГЇГ Г°Г Г¬ГҐГІГ°Г Г¬ ГҐГ±ГЄВіГ§Г '
+    ГЏГ°ГЁГЄГ«Г Г¤:
     par={'aint':0,'aext':0,'Rint':0,'Rext':dn.v,'len':l1n.v+20}
     set_values2(sketch='nipple',base='Quad_h',p=par)
     '''
@@ -237,8 +237,8 @@ def set_values2(sketch,base,p):
     for k,v in p.iteritems():
         s.parameters[k].setValues(expression=str(v))
 def part_builder(part,sketch='Sketch-1',vector=(0.0,0.0),oper='shell'):
-    '''Додає до деталі виріз або поверхню задану єскізом
-    Приклад:
+    '''Г„Г®Г¤Г Вє Г¤Г® Г¤ГҐГІГ Г«Ві ГўГЁГ°ВіГ§ Г ГЎГ® ГЇГ®ГўГҐГ°ГµГ­Гѕ Г§Г Г¤Г Г­Гі ВєГ±ГЄВіГ§Г®Г¬
+    ГЏГ°ГЁГЄГ«Г Г¤:
     part_builder(p, 'groove', (0,0), 'cut')
     '''
     s=model.ConstrainedSketch(name='__profile__',sheetSize=200.)
@@ -250,15 +250,15 @@ def part_builder(part,sketch='Sketch-1',vector=(0.0,0.0),oper='shell'):
     if oper=='cut': part.Cut(sketch=s)
     del s
 def createPart(n,s):
-    '''Створює деталь
-    n - ім'я
-    s - ескіз
+    '''Г‘ГІГўГ®Г°ГѕВє Г¤ГҐГІГ Г«Гј
+    n - ВіГ¬'Гї
+    s - ГҐГ±ГЄВіГ§
     '''
     model.Part(dimensionality=AXISYMMETRIC, name=n, type=DEFORMABLE_BODY)
     model.parts[n].BaseShell(sketch=model.sketches[s])
 def createPart3D(frompart,sketch,part):
-    '''Створює 3D деталь на основі осесиметричної деталі
-    Створюється ескіз sketch як проекція осесиметричної деталі'''
+    '''Г‘ГІГўГ®Г°ГѕВє 3D Г¤ГҐГІГ Г«Гј Г­Г  Г®Г±Г­Г®ГўВі Г®Г±ГҐГ±ГЁГ¬ГҐГІГ°ГЁГ·Г­Г®Вї Г¤ГҐГІГ Г«Ві
+    Г‘ГІГўГ®Г°ГѕВєГІГјГ±Гї ГҐГ±ГЄВіГ§ sketch ГїГЄ ГЇГ°Г®ГҐГЄГ¶ВіГї Г®Г±ГҐГ±ГЁГ¬ГҐГІГ°ГЁГ·Г­Г®Вї Г¤ГҐГІГ Г«Ві'''
     s=model.ConstrainedSketch(name=sketch,sheetSize=200.)
     tmp=model.ConstrainedSketch(name='__profile__',sheetSize=200.)
     #s.sketchOptions.setValues(viewStyle=AXISYM)
@@ -271,20 +271,20 @@ def createPart3D(frompart,sketch,part):
     p=model.Part(dimensionality=THREE_D, name=part, type=DEFORMABLE_BODY)
     p.BaseSolidRevolve(angle=360.0, flipRevolveDirection=OFF, sketch=s)
 def createCut(Part,Sketch,Begin,P,Fi,Len,X,Y,dx,dy):
-    '''Створює частину профіля різьби
-    Part - деталь (рядок)
-    Sketch - ескіз (рядок)
-    Begin - початок різьби (ціле)
-    P - крок різьби (дійсне)
-    Fi - кут конуса конічної різьби (градуси)
-    Len - довжина різьби (дійсне)
-    X,Y - початкові координати центра профілю
-    dx - радіальний напрямок подачі (+1 - вправо, -1 - вліво)
-    dy - осьовий напрямок подачі (+1 - вверх, -1 - вниз)
+    '''Г‘ГІГўГ®Г°ГѕВє Г·Г Г±ГІГЁГ­Гі ГЇГ°Г®ГґВіГ«Гї Г°ВіГ§ГјГЎГЁ
+    Part - Г¤ГҐГІГ Г«Гј (Г°ГїГ¤Г®ГЄ)
+    Sketch - ГҐГ±ГЄВіГ§ (Г°ГїГ¤Г®ГЄ)
+    Begin - ГЇГ®Г·Г ГІГ®ГЄ Г°ВіГ§ГјГЎГЁ (Г¶ВіГ«ГҐ)
+    P - ГЄГ°Г®ГЄ Г°ВіГ§ГјГЎГЁ (Г¤ВіГ©Г±Г­ГҐ)
+    Fi - ГЄГіГІ ГЄГ®Г­ГіГ±Г  ГЄГ®Г­ВіГ·Г­Г®Вї Г°ВіГ§ГјГЎГЁ (ГЈГ°Г Г¤ГіГ±ГЁ)
+    Len - Г¤Г®ГўГ¦ГЁГ­Г  Г°ВіГ§ГјГЎГЁ (Г¤ВіГ©Г±Г­ГҐ)
+    X,Y - ГЇГ®Г·Г ГІГЄГ®ГўВі ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГЁ Г¶ГҐГ­ГІГ°Г  ГЇГ°Г®ГґВіГ«Гѕ
+    dx - Г°Г Г¤ВіГ Г«ГјГ­ГЁГ© Г­Г ГЇГ°ГїГ¬Г®ГЄ ГЇГ®Г¤Г Г·Ві (+1 - ГўГЇГ°Г ГўГ®, -1 - ГўГ«ВіГўГ®)
+    dy - Г®Г±ГјГ®ГўГЁГ© Г­Г ГЇГ°ГїГ¬Г®ГЄ ГЇГ®Г¤Г Г·Ві (+1 - ГўГўГҐГ°Гµ, -1 - ГўГ­ГЁГ§)
     '''
-    #можна це зробити також за допомогою LinearInstancePattern
-    i=Begin#номер витка (0-перший)
-    while i*P<=Len:#довжина різьби
+    #Г¬Г®Г¦Г­Г  Г¶ГҐ Г§Г°Г®ГЎГЁГІГЁ ГІГ ГЄГ®Г¦ Г§Г  Г¤Г®ГЇГ®Г¬Г®ГЈГ®Гѕ LinearInstancePattern
+    i=Begin#Г­Г®Г¬ГҐГ° ГўГЁГІГЄГ  (0-ГЇГҐГ°ГёГЁГ©)
+    while i*P<=Len:#Г¤Г®ГўГ¦ГЁГ­Г  Г°ВіГ§ГјГЎГЁ
         s=model.ConstrainedSketch(name='__profile__',sheetSize=200.)
         model.parts[Part].projectReferencesOntoSketch(filter=COPLANAR_EDGES, sketch=s)
         s.ConstructionLine(point1=(0.0,0.0), point2=(0.0, 10.0))
@@ -296,43 +296,43 @@ def createCut(Part,Sketch,Begin,P,Fi,Len,X,Y,dx,dy):
         i=i+1
     return i-1
 def createPartition(part,offset):
-    '''Ділить поверхню деталі лінією (0.0,offset,0.0), (2000.0,offset,0.0)'''
+    '''Г„ВіГ«ГЁГІГј ГЇГ®ГўГҐГ°ГµГ­Гѕ Г¤ГҐГІГ Г«Ві Г«ВіГ­ВіВєГѕ (0.0,offset,0.0), (2000.0,offset,0.0)'''
     model.parts[part].PartitionFaceByShortestPath(faces=
         model.parts[part].faces[0], point1=(0.0,offset,0.0), point2=(2000.0,offset,0.0))
 def createPartition3D(part,offset):
-    '''Ділить об'єм деталі площиною зміщеною від XZPLANE на відстань offset'''
+    '''Г„ВіГ«ГЁГІГј Г®ГЎ'ВєГ¬ Г¤ГҐГІГ Г«Ві ГЇГ«Г®Г№ГЁГ­Г®Гѕ Г§Г¬ВіГ№ГҐГ­Г®Гѕ ГўВіГ¤ XZPLANE Г­Г  ГўВіГ¤Г±ГІГ Г­Гј offset'''
     p = model.parts[part]
     p.DatumPlaneByPrincipalPlane(principalPlane=XZPLANE, offset=offset)
     dp = p.datums.values()[-1]
     p.PartitionCellByDatumPlane(datumPlane=dp, cells=p.cells[0])
 def createMaterial(n,et,pt,kinematic=False):
-    '''Створює матеріал
-    n - ім'я
-    et - пружні характеристики
-    pt - пластичні характеристики
-    kinematic - модель зміцнення (True - кінематичне, False - ізотропне)
+    '''Г‘ГІГўГ®Г°ГѕВє Г¬Г ГІГҐГ°ВіГ Г«
+    n - ВіГ¬'Гї
+    et - ГЇГ°ГіГ¦Г­Ві ГµГ Г°Г ГЄГІГҐГ°ГЁГ±ГІГЁГЄГЁ
+    pt - ГЇГ«Г Г±ГІГЁГ·Г­Ві ГµГ Г°Г ГЄГІГҐГ°ГЁГ±ГІГЁГЄГЁ
+    kinematic - Г¬Г®Г¤ГҐГ«Гј Г§Г¬ВіГ¶Г­ГҐГ­Г­Гї (True - ГЄВіГ­ГҐГ¬Г ГІГЁГ·Г­ГҐ, False - ВіГ§Г®ГІГ°Г®ГЇГ­ГҐ)
     '''
     m=model.Material(name=n)
     m.Elastic(table=et)
     if kinematic:
-        m.Plastic(hardening=KINEMATIC, table=pt)# pt - тільки дві точки !
+        m.Plastic(hardening=KINEMATIC, table=pt)# pt - ГІВіГ«ГјГЄГЁ Г¤ГўВі ГІГ®Г·ГЄГЁ !
     else:
         m.Plastic(table=pt)
 
 def createSectionAssign(n,m,p):
-    '''Створює і присвоює секції деталі
-    n - ім'я
-    m - матеріал
-    p - деталь
+    '''Г‘ГІГўГ®Г°ГѕВє Ві ГЇГ°ГЁГ±ГўГ®ГѕВє Г±ГҐГЄГ¶ВіВї Г¤ГҐГІГ Г«Ві
+    n - ВіГ¬'Гї
+    m - Г¬Г ГІГҐГ°ВіГ Г«
+    p - Г¤ГҐГІГ Г«Гј
     '''
     model.HomogeneousSolidSection(material=m, name=n, thickness=None)
     model.parts[p].SectionAssignment(region=Region(
         faces=model.parts[p].faces), sectionName=n)
 def createSectionAssign3D(n,m,p):
-    '''Створює і присвоює секції деталі
-    n - ім'я
-    m - матеріал
-    p - деталь
+    '''Г‘ГІГўГ®Г°ГѕВє Ві ГЇГ°ГЁГ±ГўГ®ГѕВє Г±ГҐГЄГ¶ВіВї Г¤ГҐГІГ Г«Ві
+    n - ВіГ¬'Гї
+    m - Г¬Г ГІГҐГ°ВіГ Г«
+    p - Г¤ГҐГІГ Г«Гј
     '''
     if model.parts[p].sectionAssignments:
         del model.parts[p].sectionAssignments[0]
@@ -340,48 +340,48 @@ def createSectionAssign3D(n,m,p):
     model.parts[p].SectionAssignment(region=Region(cells=model.parts[p].cells), sectionName=n) 
 
 def createAssemblyInstance(n,p):
-    '''Створює елемент зборки
-    n - ім'я
-    p - деталь
+    '''Г‘ГІГўГ®Г°ГѕВє ГҐГ«ГҐГ¬ГҐГ­ГІ Г§ГЎГ®Г°ГЄГЁ
+    n - ВіГ¬'Гї
+    p - Г¤ГҐГІГ Г«Гј
     '''
     model.rootAssembly.Instance(dependent=OFF, name=n, part=model.parts[p])
 def createAssemblyInstance3D(n,p):
-    '''Створює елемент зборки
-    n - ім'я
-    p - деталь
+    '''Г‘ГІГўГ®Г°ГѕВє ГҐГ«ГҐГ¬ГҐГ­ГІ Г§ГЎГ®Г°ГЄГЁ
+    n - ВіГ¬'Гї
+    p - Г¤ГҐГІГ Г«Гј
     '''
     #model.rootAssembly.DatumCsysByDefault(CARTESIAN)
     model.rootAssembly.Instance(dependent=OFF, name=n, part=model.parts[p])
 def createStep(n,pr):
-    '''Створює крок
-    n - ім'я
-    pr - попередній крок
+    '''Г‘ГІГўГ®Г°ГѕВє ГЄГ°Г®ГЄ
+    n - ВіГ¬'Гї
+    pr - ГЇГ®ГЇГҐГ°ГҐГ¤Г­ВіГ© ГЄГ°Г®ГЄ
     '''
     model.StaticStep(name=n, previous=pr)
 def createContactSet(n,i,ep):
-    '''Створює набір для контакту
-    n - ім'я
-    i - елемент зборки
-    ep - кортеж точок кромок не для контакту
+    '''Г‘ГІГўГ®Г°ГѕВє Г­Г ГЎВіГ° Г¤Г«Гї ГЄГ®Г­ГІГ ГЄГІГі
+    n - ВіГ¬'Гї
+    i - ГҐГ«ГҐГ¬ГҐГ­ГІ Г§ГЎГ®Г°ГЄГЁ
+    ep - ГЄГ®Г°ГІГҐГ¦ ГІГ®Г·Г®ГЄ ГЄГ°Г®Г¬Г®ГЄ Г­ГҐ Г¤Г«Гї ГЄГ®Г­ГІГ ГЄГІГі
     '''
     model.rootAssembly.regenerate()
     ae=model.rootAssembly.instances[i].edges
-    e=ae.findAt(*ep)#*ep - розпакування кортежу
+    e=ae.findAt(*ep)#*ep - Г°Г®Г§ГЇГ ГЄГіГўГ Г­Г­Гї ГЄГ®Г°ГІГҐГ¦Гі
     p=[x.pointOn for x in ae if x not in e]
     model.rootAssembly.Set(name=n,edges=ae.findAt(*p))
 def createContactSet3D(n,i,ep):
-    '''Створює набір для контакту
-    n - ім'я
-    i - елемент зборки
-    ep - кортеж точок кромок не для контакту
+    '''Г‘ГІГўГ®Г°ГѕВє Г­Г ГЎВіГ° Г¤Г«Гї ГЄГ®Г­ГІГ ГЄГІГі
+    n - ВіГ¬'Гї
+    i - ГҐГ«ГҐГ¬ГҐГ­ГІ Г§ГЎГ®Г°ГЄГЁ
+    ep - ГЄГ®Г°ГІГҐГ¦ ГІГ®Г·Г®ГЄ ГЄГ°Г®Г¬Г®ГЄ Г­ГҐ Г¤Г«Гї ГЄГ®Г­ГІГ ГЄГІГі
     '''
     model.rootAssembly.regenerate()
     ae=model.rootAssembly.instances[i].faces
-    e=ae.findAt(*ep)#*ep - розпакування кортежу
+    e=ae.findAt(*ep)#*ep - Г°Г®Г§ГЇГ ГЄГіГўГ Г­Г­Гї ГЄГ®Г°ГІГҐГ¦Гі
     p=[x.pointOn for x in ae if x not in e]
     model.rootAssembly.Set(name=n,faces=ae.findAt(*p))
 def createContactProperty():
-    '''Створює властивості контакту'''
+    '''Г‘ГІГўГ®Г°ГѕВє ГўГ«Г Г±ГІГЁГўГ®Г±ГІВі ГЄГ®Г­ГІГ ГЄГІГі'''
     model.ContactProperty('IntProp-1')
     model.interactionProperties['IntProp-1'].TangentialBehavior(
         dependencies=0, directionality=ISOTROPIC, elasticSlipStiffness=None,
@@ -391,7 +391,7 @@ def createContactProperty():
     model.interactionProperties['IntProp-1'].NormalBehavior(
         allowSeparation=ON, constraintEnforcementMethod=DEFAULT,pressureOverclosure=HARD)
 def createContact():
-    '''Створює контакт'''
+    '''Г‘ГІГўГ®Г°ГѕВє ГЄГ®Г­ГІГ ГЄГІ'''
     sm=model.rootAssembly.sets['Master']
     ss=model.rootAssembly.sets['Slave']
     #model.SurfaceToSurfaceContactStd(adjustMethod=NONE,
@@ -406,7 +406,7 @@ def createContact():
         slave=Region(side1Edges=ss.edges), sliding=SMALL, surfaceSmoothing=NONE,
         thickness=ON) 
 def createContact3D():
-    '''Створює контакт'''
+    '''Г‘ГІГўГ®Г°ГѕВє ГЄГ®Г­ГІГ ГЄГІ'''
     sm=model.rootAssembly.sets['Master']
     ss=model.rootAssembly.sets['Slave']
     model.SurfaceToSurfaceContactStd(adjustMethod=NONE, 
@@ -415,23 +415,23 @@ def createContact3D():
         side1Faces=sm.faces), name='Int-1', slave=Region(
         side1Faces=ss.faces), sliding=FINITE, smooth=0.2) 
 def createBCSet(n,i,ep):
-    '''Створює набір для граничної умови
-    n - ім'я
-    i - елемент зборки
-    ep - кортеж точок кромок для граничної умови
+    '''Г‘ГІГўГ®Г°ГѕВє Г­Г ГЎВіГ° Г¤Г«Гї ГЈГ°Г Г­ГЁГ·Г­Г®Вї ГіГ¬Г®ГўГЁ
+    n - ВіГ¬'Гї
+    i - ГҐГ«ГҐГ¬ГҐГ­ГІ Г§ГЎГ®Г°ГЄГЁ
+    ep - ГЄГ®Г°ГІГҐГ¦ ГІГ®Г·Г®ГЄ ГЄГ°Г®Г¬Г®ГЄ Г¤Г«Гї ГЈГ°Г Г­ГЁГ·Г­Г®Вї ГіГ¬Г®ГўГЁ
     '''
     s=model.rootAssembly.Set(edges=model.rootAssembly.instances[i].edges.findAt(ep), name=n)
 def createBCSet3D(n,i,ep):
-    '''Створює набір для граничної умови
-    n - ім'я
-    i - елемент зборки
-    ep - кортеж точок кромок для граничної умови
+    '''Г‘ГІГўГ®Г°ГѕВє Г­Г ГЎВіГ° Г¤Г«Гї ГЈГ°Г Г­ГЁГ·Г­Г®Вї ГіГ¬Г®ГўГЁ
+    n - ВіГ¬'Гї
+    i - ГҐГ«ГҐГ¬ГҐГ­ГІ Г§ГЎГ®Г°ГЄГЁ
+    ep - ГЄГ®Г°ГІГҐГ¦ ГІГ®Г·Г®ГЄ ГЄГ°Г®Г¬Г®ГЄ Г¤Г«Гї ГЈГ°Г Г­ГЁГ·Г­Г®Вї ГіГ¬Г®ГўГЁ
     '''
     s=model.rootAssembly.Set(faces=model.rootAssembly.instances[i].faces.findAt(ep), name=n)
     
 def createBC_Pressure(step):
-    '''Створює тиск. Приклад:
-    createBC_Pressure([('Step-1',-1.0),('Step-2',-276.0e+6*d0.v/dn.v)])'''
+    '''Г‘ГІГўГ®Г°ГѕВє ГІГЁГ±ГЄ. ГЏГ°ГЁГЄГ«Г Г¤:
+    createBC_Pressure([('Step-1',-1.0),('Step-2',-276.0e+6*d0.v**2/dn.v**2)])'''
     s=model.rootAssembly.sets['Pressure']
     model.Pressure(amplitude=UNSET, createStepName=step[0][0],
         distributionType=UNIFORM, field='', magnitude=step[0][1], name='Pressure',
@@ -439,25 +439,25 @@ def createBC_Pressure(step):
     for x in step:
         model.loads['Pressure'].setValuesInStep(magnitude=x[1], stepName=x[0])    
 def createBC_Axis():
-    '''Створює граничні умови на осі (для осесиметричних моделей)'''
+    '''Г‘ГІГўГ®Г°ГѕВє ГЈГ°Г Г­ГЁГ·Г­Ві ГіГ¬Г®ГўГЁ Г­Г  Г®Г±Ві (Г¤Г«Гї Г®Г±ГҐГ±ГЁГ¬ГҐГІГ°ГЁГ·Г­ГЁГµ Г¬Г®Г¤ГҐГ«ГҐГ©)'''
     s=model.rootAssembly.sets['Axis']
     model.DisplacementBC(amplitude=UNSET, createStepName='Step-1',
     distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
     'Axis', region=Region(edges=s.edges), u1=0.0, u2=UNSET, ur3=0.0)
 def createBC_Encastre():
-    '''Створює закріплення'''
+    '''Г‘ГІГўГ®Г°ГѕВє Г§Г ГЄГ°ВіГЇГ«ГҐГ­Г­Гї'''
     s=model.rootAssembly.sets['Encastre']
     model.EncastreBC(createStepName='Step-1', name='Encastre', region=Region(edges=s.edges))
 def createBC_BoltLoad(part,point,value):
-    '''Створює BoltLoad. Приклад:
+    '''Г‘ГІГўГ®Г°ГѕВє BoltLoad. ГЏГ°ГЁГЄГ«Г Г¤:
     createBC_BoltLoad('Part-2-1',em3,-0.1)'''
     model.BoltLoad(boltMethod=ADJUST_LENGTH, createStepName='Step-1', datumAxis=
         model.rootAssembly.instances[part].datums[1],
         magnitude=value, name='BoltLoad', region=Region(
         side1Edges=model.rootAssembly.instances[part].edges.findAt((point, ))))
 def createBC_Pressure3D(step):
-    '''Створює тиск. Приклад:
-    createBC_Pressure([('Step-1',-1.0),('Step-2',-276.0e+6*d0.v/dn.v)])'''
+    '''Г‘ГІГўГ®Г°ГѕВє ГІГЁГ±ГЄ. ГЏГ°ГЁГЄГ«Г Г¤:
+    createBC_Pressure([('Step-1',-1.0),('Step-2',-276.0e+6*d0.v**2/dn.v**2)])'''
     s=model.rootAssembly.sets['Pressure']
     model.Pressure(amplitude=UNSET, createStepName=step[0][0],
         distributionType=UNIFORM, field='', magnitude=step[0][1], name='Pressure',
@@ -465,18 +465,18 @@ def createBC_Pressure3D(step):
     for x in step:
         model.loads['Pressure'].setValuesInStep(magnitude=x[1], stepName=x[0])
 def createBC_Encastre3D():
-    '''Створює закріплення'''
+    '''Г‘ГІГўГ®Г°ГѕВє Г§Г ГЄГ°ВіГЇГ«ГҐГ­Г­Гї'''
     s=model.rootAssembly.sets['Encastre']
     model.EncastreBC(createStepName='Step-1', name='Encastre', region=Region(faces=s.faces))
 def createBC_BoltLoad3D(part,point,value):
-    '''Створює BoltLoad. Приклад:
+    '''Г‘ГІГўГ®Г°ГѕВє BoltLoad. ГЏГ°ГЁГЄГ«Г Г¤:
     createBC_BoltLoad('Part-2-1',em3,-0.1)'''
     model.BoltLoad(boltMethod=ADJUST_LENGTH, createStepName='Step-1', datumAxis=
         model.rootAssembly.instances[part].datums[1],
         magnitude=value, name='BoltLoad', region=Region(
         side1Faces=model.rootAssembly.instances[part].faces.findAt((point, ))))
 def createMesh():
-    '''Створює сітку'''
+    '''Г‘ГІГўГ®Г°ГѕВє Г±ВіГІГЄГі'''
     model.rootAssembly.seedPartInstance(deviationFactor=0.1,
         regions=(model.rootAssembly.instances['Part-1-1'],
         model.rootAssembly.instances['Part-2-1']), size=2.6)
@@ -488,7 +488,7 @@ def createMesh():
         model.rootAssembly.instances['Part-1-1'],
         model.rootAssembly.instances['Part-2-1']))
 def createMesh3D():
-    '''Створює сітку'''
+    '''Г‘ГІГўГ®Г°ГѕВє Г±ВіГІГЄГі'''
     model.rootAssembly.setMeshControls(elemShape=TET, regions=
         model.rootAssembly.instances['Part-3-1'].cells+\
         model.rootAssembly.instances['Part-4-1'].cells, technique=FREE)
@@ -499,8 +499,8 @@ def createMesh3D():
         model.rootAssembly.instances['Part-3-1'], 
         model.rootAssembly.instances['Part-4-1'])) 
 def createEdgesSet(n, i, p, exclude=False):
-    '''Створює Set з ребер (ребро задається довільною точкою на ньому)
-    exclude=True - з усіх ребер крім заданих (тільки для OdbSet!)
+    '''Г‘ГІГўГ®Г°ГѕВє Set Г§ Г°ГҐГЎГҐГ° (Г°ГҐГЎГ°Г® Г§Г Г¤Г ВєГІГјГ±Гї Г¤Г®ГўВіГ«ГјГ­Г®Гѕ ГІГ®Г·ГЄГ®Гѕ Г­Г  Г­ГјГ®Г¬Гі)
+    exclude=True - Г§ ГіГ±ВіГµ Г°ГҐГЎГҐГ° ГЄГ°ВіГ¬ Г§Г Г¤Г Г­ГЁГµ (ГІВіГ«ГјГЄГЁ Г¤Г«Гї OdbSet!)
     createEdgesSet(n='Set-6',i='Part-1-1',p=((enr1, ),(en1, )))'''
     if exclude==True:
         edges=model.rootAssembly.instances[i].edges[:]
@@ -510,29 +510,29 @@ def createEdgesSet(n, i, p, exclude=False):
         edges=model.rootAssembly.instances[i].edges.findAt(*p)
         model.rootAssembly.Set(edges=edges, name=n)
 def createVerticesSet(n, i, p):
-    '''Створює Set з вершин
+    '''Г‘ГІГўГ®Г°ГѕВє Set Г§ ГўГҐГ°ГёГЁГ­
     createVerticesSet(n='Set-7',i='Part-1-1',p=(((0,0,0), ),))'''
     model.rootAssembly.Set(vertices=model.rootAssembly.instances[i].vertices.findAt(*p), name=n)
 def createSet(n, r):
-    '''Створює Set з регіону
+    '''Г‘ГІГўГ®Г°ГѕВє Set Г§ Г°ГҐГЈВіГ®Г­Гі
     r = regionToolset.Region(edges=e,vertices=v,xEdges=xe,xVertices=xv)
     createSet(n='Set-8', r=r)'''
     model.rootAssembly.Set(region=r, name=n)
 def delItems():
-    '''Знищує елементи'''
+    '''Г‡Г­ГЁГ№ГіВє ГҐГ«ГҐГ¬ГҐГ­ГІГЁ'''
     if model.steps.has_key('Step-2'): del model.steps['Step-2']
     if model.steps.has_key('Step-1'): del model.steps['Step-1']
 def createJobSubmit():
-    '''Створює задачу і виконує її'''
+    '''Г‘ГІГўГ®Г°ГѕВє Г§Г Г¤Г Г·Гі Ві ГўГЁГЄГ®Г­ГіВє ВїВї'''
     myJob = mdb.Job(name=model.name, model=model.name)
     myJob.submit()
-    # Чекати поки задача не буде розв'язана
+    # Г—ГҐГЄГ ГІГЁ ГЇГ®ГЄГЁ Г§Г Г¤Г Г·Г  Г­ГҐ ГЎГіГ¤ГҐ Г°Г®Г§Гў'ГїГ§Г Г­Г 
     myJob.waitForCompletion()
 def createObdNodeSet(coords,name='MYSET',prt='Part-1-1',item_type='vertex'):
-    '''Створює ObdNodeSet за заданим координатами ребром або вершиною'''
+    '''Г‘ГІГўГ®Г°ГѕВє ObdNodeSet Г§Г  Г§Г Г¤Г Г­ГЁГ¬ ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГ Г¬ГЁ Г°ГҐГЎГ°Г®Г¬ Г ГЎГ® ГўГҐГ°ГёГЁГ­Г®Гѕ'''
     if item_type=='edge':
         _item=model.rootAssembly.instances[prt].edges.findAt(coordinates=coords)
-        #або getClosest()
+        #Г ГЎГ® getClosest()
     if item_type=='vertex':
         _item=model.rootAssembly.instances[prt].vertices.findAt(coordinates=coords)   
     _nodes=_item.getNodes() #model.rootAssembly.sets['Set-6'].nodes
@@ -541,140 +541,140 @@ def createObdNodeSet(coords,name='MYSET',prt='Part-1-1',item_type='vertex'):
         _nodeLabels.append(x.label)
     _nset=myOdb.rootAssembly.NodeSetFromNodeLabels(name=name,nodeLabels=((prt.upper(), _nodeLabels),))
 def readODB_path(path,step,var,intersections=False):
-    '''Читає результати з останнього фрейму кроку на заданому шляху з точок
-    path - шлях (список точок, >=1)
-    step - крок
-    var - змінна:
+    '''Г—ГЁГІГ Вє Г°ГҐГ§ГіГ«ГјГІГ ГІГЁ Г§ Г®Г±ГІГ Г­Г­ГјГ®ГЈГ® ГґГ°ГҐГ©Г¬Гі ГЄГ°Г®ГЄГі Г­Г  Г§Г Г¤Г Г­Г®Г¬Гі ГёГ«ГїГµГі Г§ ГІГ®Г·Г®ГЄ
+    path - ГёГ«ГїГµ (Г±ГЇГЁГ±Г®ГЄ ГІГ®Г·Г®ГЄ, >=1)
+    step - ГЄГ°Г®ГЄ
+    var - Г§Г¬ВіГ­Г­Г :
     (('S', INTEGRATION_POINT, ((INVARIANT, 'Mises'), )), )
     (('S', INTEGRATION_POINT, ((INVARIANT, 'Pressure'), )), )
     (('S', INTEGRATION_POINT, ((COMPONENT, 'S11'), )), )
     (('U', NODAL, ((INVARIANT, 'Magnitude'), )), )
     (('U', NODAL, ((COMPONENT, 'U1'), )), )
     (('CPRESS', ELEMENT_NODAL), )
-    'D' #коефіцієнт запасу втомної міцності
-    intersections=True - додає проміжні точки
-    Приклад: readODB_path(path=((1.97212e+001,  3.65000e+001, 0.0), ),step='Step-1',var=var)
+    'D' #ГЄГ®ГҐГґВіГ¶ВіВєГ­ГІ Г§Г ГЇГ Г±Гі ГўГІГ®Г¬Г­Г®Вї Г¬ВіГ¶Г­Г®Г±ГІВі
+    intersections=True - Г¤Г®Г¤Г Вє ГЇГ°Г®Г¬ВіГ¦Г­Ві ГІГ®Г·ГЄГЁ
+    ГЏГ°ГЁГЄГ«Г Г¤: readODB_path(path=((1.97212e+001,  3.65000e+001, 0.0), ),step='Step-1',var=var)
     '''
-    pth=session.Path(name='Path-tmp', type=POINT_LIST, expression=path) #шлях
+    pth=session.Path(name='Path-tmp', type=POINT_LIST, expression=path) #ГёГ«ГїГµ
     if var=='D':
         frame1 = session.scratchOdbs['Model-1.odb'].steps['Session Step'].frames[0]
         session.viewports['Viewport: 1'].odbDisplay.setFrame(frame=frame1) 
         dat=session.XYDataFromPath(name='XYData-1', path=pth, includeIntersections=intersections, shape=UNDEFORMED, labelType=SEQ_ID) 
     else:
-        st=myOdb.steps[step].number-1 #індекс кроку
-        fr=len(myOdb.steps[step].frames)-1 #індекс останнього фрейму
+        st=myOdb.steps[step].number-1 #ВіГ­Г¤ГҐГЄГ± ГЄГ°Г®ГЄГі
+        fr=len(myOdb.steps[step].frames)-1 #ВіГ­Г¤ГҐГЄГ± Г®Г±ГІГ Г­Г­ГјГ®ГЈГ® ГґГ°ГҐГ©Г¬Гі
         #session.viewports['Viewport: 1'].odbDisplay.setFrame(step=st, frame=fr)
         #session.viewports['Viewport: 1'].odbDisplay.setPrimaryVariable(variableLabel='S', outputPosition=INTEGRATION_POINT, refinement=(INVARIANT, 'Tresca')) 
-        dat=session.XYDataFromPath(name='XYData-1', path=pth, includeIntersections=intersections,shape=UNDEFORMED, labelType=SEQ_ID,step=st,frame=fr,variable=var) #дані
-    res=[] #список результатів
+        dat=session.XYDataFromPath(name='XYData-1', path=pth, includeIntersections=intersections,shape=UNDEFORMED, labelType=SEQ_ID,step=st,frame=fr,variable=var) #Г¤Г Г­Ві
+    res=[] #Г±ГЇГЁГ±Г®ГЄ Г°ГҐГ§ГіГ«ГјГІГ ГІВіГў
     for x in dat.data:
-        res.append(x[1]) #додати до списку результатів
-    #видалити тимчасові дані
+        res.append(x[1]) #Г¤Г®Г¤Г ГІГЁ Г¤Г® Г±ГЇГЁГ±ГЄГі Г°ГҐГ§ГіГ«ГјГІГ ГІВіГў
+    #ГўГЁГ¤Г Г«ГЁГІГЁ ГІГЁГ¬Г·Г Г±Г®ГўВі Г¤Г Г­Ві
     del session.paths['Path-tmp']
     for k in session.xyDataObjects.keys():
         del session.xyDataObjects[k]  
-    return res #повертае список значень
+    return res #ГЇГ®ГўГҐГ°ГІГ ГҐ Г±ГЇГЁГ±Г®ГЄ Г§Г­Г Г·ГҐГ­Гј
 
 def readODB_set(set,step,var,pos=NODAL):
-    '''Читає результати з останнього фрейму кроку на заданій множині
-    set - множина
-    step - крок
-    var - змінна:
+    '''Г—ГЁГІГ Вє Г°ГҐГ§ГіГ«ГјГІГ ГІГЁ Г§ Г®Г±ГІГ Г­Г­ГјГ®ГЈГ® ГґГ°ГҐГ©Г¬Гі ГЄГ°Г®ГЄГі Г­Г  Г§Г Г¤Г Г­ВіГ© Г¬Г­Г®Г¦ГЁГ­Ві
+    set - Г¬Г­Г®Г¦ГЁГ­Г 
+    step - ГЄГ°Г®ГЄ
+    var - Г§Г¬ВіГ­Г­Г :
     (('S', INTEGRATION_POINT, ((INVARIANT, 'Mises'), )), )
     (('CPRESS', ELEMENT_NODAL), )
-    pos - позиція: NODAL - для вузлів,INTEGRATION_POINT - для елементів
-    Приклад: readODB_set(set='Cont',step='Step-1',var=var)
+    pos - ГЇГ®Г§ГЁГ¶ВіГї: NODAL - Г¤Г«Гї ГўГіГ§Г«ВіГў,INTEGRATION_POINT - Г¤Г«Гї ГҐГ«ГҐГ¬ГҐГ­ГІВіГў
+    ГЏГ°ГЁГЄГ«Г Г¤: readODB_set(set='Cont',step='Step-1',var=var)
     '''
     if pos==NODAL:    
-        dat=session.xyDataListFromField(odb=myOdb, outputPosition=NODAL, variable=var, nodeSets=(set.upper(),)) #дані
+        dat=session.xyDataListFromField(odb=myOdb, outputPosition=NODAL, variable=var, nodeSets=(set.upper(),)) #Г¤Г Г­Ві
     if pos==INTEGRATION_POINT:
-        dat=session.xyDataListFromField(odb=myOdb, outputPosition=INTEGRATION_POINT, variable=var, elementSets=(set.upper(),)) #дані
-    res=[] #список результатів
-    for x in dat: #для всіх вузлів
+        dat=session.xyDataListFromField(odb=myOdb, outputPosition=INTEGRATION_POINT, variable=var, elementSets=(set.upper(),)) #Г¤Г Г­Ві
+    res=[] #Г±ГЇГЁГ±Г®ГЄ Г°ГҐГ§ГіГ«ГјГІГ ГІВіГў
+    for x in dat: #Г¤Г«Гї ГўГ±ВіГµ ГўГіГ§Г«ВіГў
         n=0
-        for k in myOdb.steps.keys(): #для всіх кроків
-            n=n+len(myOdb.steps[k].frames) #сумарна кількість фреймів до k кроку включно
-            if k==step: res.append(x.data[n-1][1]) #додати до списку результатів
-            #data це ((час,значення),(час,значення)...)
-    #видалити тимчасові дані
+        for k in myOdb.steps.keys(): #Г¤Г«Гї ГўГ±ВіГµ ГЄГ°Г®ГЄВіГў
+            n=n+len(myOdb.steps[k].frames) #Г±ГіГ¬Г Г°Г­Г  ГЄВіГ«ГјГЄВіГ±ГІГј ГґГ°ГҐГ©Г¬ВіГў Г¤Г® k ГЄГ°Г®ГЄГі ГўГЄГ«ГѕГ·Г­Г®
+            if k==step: res.append(x.data[n-1][1]) #Г¤Г®Г¤Г ГІГЁ Г¤Г® Г±ГЇГЁГ±ГЄГі Г°ГҐГ§ГіГ«ГјГІГ ГІВіГў
+            #data Г¶ГҐ ((Г·Г Г±,Г§Г­Г Г·ГҐГ­Г­Гї),(Г·Г Г±,Г§Г­Г Г·ГҐГ­Г­Гї)...)
+    #ГўГЁГ¤Г Г«ГЁГІГЁ ГІГЁГ¬Г·Г Г±Г®ГўВі Г¤Г Г­Ві
     for k in session.xyDataObjects.keys():
         del session.xyDataObjects[k] 
-    return res #повертае список значень
+    return res #ГЇГ®ГўГҐГ°ГІГ ГҐ Г±ГЇГЁГ±Г®ГЄ Г§Г­Г Г·ГҐГ­Гј
 
 def readODB_set_(set,var):
-    '''Повертає список результатів в вузлах заданої множини
-    (для змінних fe-safe)
-    set - множина
-    var - змінна:
+    '''ГЏГ®ГўГҐГ°ГІГ Вє Г±ГЇГЁГ±Г®ГЄ Г°ГҐГ§ГіГ«ГјГІГ ГІВіГў Гў ГўГіГ§Г«Г Гµ Г§Г Г¤Г Г­Г®Вї Г¬Г­Г®Г¦ГЁГ­ГЁ
+    (Г¤Г«Гї Г§Г¬ВіГ­Г­ГЁГµ fe-safe)
+    set - Г¬Г­Г®Г¦ГЁГ­Г 
+    var - Г§Г¬ВіГ­Г­Г :
     (('LOGLife-Repeats', ELEMENT_NODAL), )
     (('FOS@Life=Infinite', ELEMENT_NODAL), )
     (('%%Failure@Life=5E6-Repeats', ELEMENT_NODAL), )
-    Приклад: readODB_set_(set='Set-1',var=var)
+    ГЏГ°ГЁГЄГ«Г Г¤: readODB_set_(set='Set-1',var=var)
     '''
-    #отримати дані
-    dat=session.xyDataListFromField(odb=myOdb, outputPosition=NODAL, variable=var, nodeSets=(set.upper(),)) #дані
+    #Г®ГІГ°ГЁГ¬Г ГІГЁ Г¤Г Г­Ві
+    dat=session.xyDataListFromField(odb=myOdb, outputPosition=NODAL, variable=var, nodeSets=(set.upper(),)) #Г¤Г Г­Ві
     
-    res=[] #список результатів
-    for x in dat: #для всіх вузлів
-        #x.data це ((час,значення),(час,значення)...)
-        res.append(x.data) #дані
+    res=[] #Г±ГЇГЁГ±Г®ГЄ Г°ГҐГ§ГіГ«ГјГІГ ГІВіГў
+    for x in dat: #Г¤Г«Гї ГўГ±ВіГµ ГўГіГ§Г«ВіГў
+        #x.data Г¶ГҐ ((Г·Г Г±,Г§Г­Г Г·ГҐГ­Г­Гї),(Г·Г Г±,Г§Г­Г Г·ГҐГ­Г­Гї)...)
+        res.append(x.data) #Г¤Г Г­Ві
                             
-    #видалити тимчасові дані
+    #ГўГЁГ¤Г Г«ГЁГІГЁ ГІГЁГ¬Г·Г Г±Г®ГўВі Г¤Г Г­Ві
     for k in session.xyDataObjects.keys():
         del session.xyDataObjects[k] 
-    return res #повертае список значень
+    return res #ГЇГ®ГўГҐГ°ГІГ ГҐ Г±ГЇГЁГ±Г®ГЄ Г§Г­Г Г·ГҐГ­Гј
 
 def readODB_set2(set,step,var,pos=NODAL):
-    '''Читає результати з останнього фрейму кроку на заданій множині
-    (менш універсальна альтернатива readODB_set())
-    set - множина
-    step - крок
-    var - змінна:
+    '''Г—ГЁГІГ Вє Г°ГҐГ§ГіГ«ГјГІГ ГІГЁ Г§ Г®Г±ГІГ Г­Г­ГјГ®ГЈГ® ГґГ°ГҐГ©Г¬Гі ГЄГ°Г®ГЄГі Г­Г  Г§Г Г¤Г Г­ВіГ© Г¬Г­Г®Г¦ГЁГ­Ві
+    (Г¬ГҐГ­Гё ГіГ­ВіГўГҐГ°Г±Г Г«ГјГ­Г  Г Г«ГјГІГҐГ°Г­Г ГІГЁГўГ  readODB_set())
+    set - Г¬Г­Г®Г¦ГЁГ­Г 
+    step - ГЄГ°Г®ГЄ
+    var - Г§Г¬ВіГ­Г­Г :
     ('S','Mises')
     ('S','Pressure')
     ('U','Magnitude')
     ('U','U1')
     ('CPRESS','')
-    ('D','') #коефіцієнт запасу втомної міцності
-    pos - позиція: NODAL - для вузлів,INTEGRATION_POINT - для елементів
-    Приклад: readODB_set2(set='Cont',step='Step-1',var=('S','Mises'))
+    ('D','') #ГЄГ®ГҐГґВіГ¶ВіВєГ­ГІ Г§Г ГЇГ Г±Гі ГўГІГ®Г¬Г­Г®Вї Г¬ВіГ¶Г­Г®Г±ГІВі
+    pos - ГЇГ®Г§ГЁГ¶ВіГї: NODAL - Г¤Г«Гї ГўГіГ§Г«ВіГў,INTEGRATION_POINT - Г¤Г«Гї ГҐГ«ГҐГ¬ГҐГ­ГІВіГў
+    ГЏГ°ГЁГЄГ«Г Г¤: readODB_set2(set='Cont',step='Step-1',var=('S','Mises'))
     '''
     if pos==NODAL:    
-        s=myOdb.rootAssembly.nodeSets[set.upper()] #множина вузлів
+        s=myOdb.rootAssembly.nodeSets[set.upper()] #Г¬Г­Г®Г¦ГЁГ­Г  ГўГіГ§Г«ВіГў
     if pos==INTEGRATION_POINT:
-        s=myOdb.rootAssembly.elementSets[set.upper()] #множина елементів
+        s=myOdb.rootAssembly.elementSets[set.upper()] #Г¬Г­Г®Г¦ГЁГ­Г  ГҐГ«ГҐГ¬ГҐГ­ГІВіГў
     if var[0]=='D': 
-        fo=session.scratchOdbs['Model-1.odb'].steps['Session Step'].frames[-1].fieldOutputs['D'].getSubset(region=s,position=pos) #дані
+        fo=session.scratchOdbs['Model-1.odb'].steps['Session Step'].frames[-1].fieldOutputs['D'].getSubset(region=s,position=pos) #Г¤Г Г­Ві
     else:
-        fo=myOdb.steps[step].frames[-1].fieldOutputs[var[0]].getSubset(region=s,position=pos) #дані
+        fo=myOdb.steps[step].frames[-1].fieldOutputs[var[0]].getSubset(region=s,position=pos) #Г¤Г Г­Ві
         #openOdb(r'C:/Temp/Model-1.odb').steps['Step-1'].frames[4].fieldOutputs['CPRESS'].getSubset(position=NODAL, region=openOdb(r'C:/Temp/Model-1.odb').rootAssembly.nodeSets['CONT']).values[0].data
-    res=[] #список результатів
-    for v in fo.values: #для кожного вузла/елемента
-        if var[1]=='Mises': res.append(v.mises)#додати до списку результатів
+    res=[] #Г±ГЇГЁГ±Г®ГЄ Г°ГҐГ§ГіГ«ГјГІГ ГІВіГў
+    for v in fo.values: #Г¤Г«Гї ГЄГ®Г¦Г­Г®ГЈГ® ГўГіГ§Г«Г /ГҐГ«ГҐГ¬ГҐГ­ГІГ 
+        if var[1]=='Mises': res.append(v.mises)#Г¤Г®Г¤Г ГІГЁ Г¤Г® Г±ГЇГЁГ±ГЄГі Г°ГҐГ§ГіГ«ГјГІГ ГІВіГў
         if var[1]=='Pressure': res.append(v.press)
         if var[0]=='U' and var[1]=='Magnitude': res.append(v.magnitude)
         if var[1]=='U1': res.append(v.data.tolist()[0])
         if var[1]=='U2': res.append(v.data.tolist()[1])
         if var[0]=='CPRESS': res.append(v.data)
         if var[0]=='D': res.append(v.data)
-    return res #повертае список значень
+    return res #ГЇГ®ГўГҐГ°ГІГ ГҐ Г±ГЇГЁГ±Г®ГЄ Г§Г­Г Г·ГҐГ­Гј
 
 def runFeSafe(input_odb,input_stlx,output_odb):
-    '''Виконує аналіз втомної міцності у fe-safe
-    input_odb - назва вхідного файлу результатів Abaqus (без розширення .odb)
-    input_stlx - назва файлу моделі fe-safe (без розширення .stlx)
-    output_odb - назва вихідного файлу результатів Abaqus (без розширення .odb)
-    Якщо з FEA моделі імпортуються напруження і деформації, то перед створенням файлу sltx в налаштуваннях Analysis Options необхідно вибрати Read strains from FE Models.
+    '''Г‚ГЁГЄГ®Г­ГіВє Г Г­Г Г«ВіГ§ ГўГІГ®Г¬Г­Г®Вї Г¬ВіГ¶Г­Г®Г±ГІВі Гі fe-safe
+    input_odb - Г­Г Г§ГўГ  ГўГµВіГ¤Г­Г®ГЈГ® ГґГ Г©Г«Гі Г°ГҐГ§ГіГ«ГјГІГ ГІВіГў Abaqus (ГЎГҐГ§ Г°Г®Г§ГёГЁГ°ГҐГ­Г­Гї .odb)
+    input_stlx - Г­Г Г§ГўГ  ГґГ Г©Г«Гі Г¬Г®Г¤ГҐГ«Ві fe-safe (ГЎГҐГ§ Г°Г®Г§ГёГЁГ°ГҐГ­Г­Гї .stlx)
+    output_odb - Г­Г Г§ГўГ  ГўГЁГµВіГ¤Г­Г®ГЈГ® ГґГ Г©Г«Гі Г°ГҐГ§ГіГ«ГјГІГ ГІВіГў Abaqus (ГЎГҐГ§ Г°Г®Г§ГёГЁГ°ГҐГ­Г­Гї .odb)
+    ГџГЄГ№Г® Г§ FEA Г¬Г®Г¤ГҐГ«Ві ВіГ¬ГЇГ®Г°ГІГіГѕГІГјГ±Гї Г­Г ГЇГ°ГіГ¦ГҐГ­Г­Гї Ві Г¤ГҐГґГ®Г°Г¬Г Г¶ВіВї, ГІГ® ГЇГҐГ°ГҐГ¤ Г±ГІГўГ®Г°ГҐГ­Г­ГїГ¬ ГґГ Г©Г«Гі sltx Гў Г­Г Г«Г ГёГІГіГўГ Г­Г­ГїГµ Analysis Options Г­ГҐГ®ГЎГµВіГ¤Г­Г® ГўГЁГЎГ°Г ГІГЁ Read strains from FE Models.
     '''
     s=r'd:\Program Files\Safe_Technology\fe-safe\version.6.2\exe\fe-safe_cl.exe -s j=c:\1\{iodb}.odb b=c:\1\{istlx}.stlx o=c:\1\{oodb}.odb'
     s=s.format(iodb=input_odb, istlx=input_stlx, oodb=output_odb)
-    # виконує обчислення в fe-safe та чекає завершення
+    # ГўГЁГЄГ®Г­ГіВє Г®ГЎГ·ГЁГ±Г«ГҐГ­Г­Гї Гў fe-safe ГІГ  Г·ГҐГЄГ Вє Г§Г ГўГҐГ°ГёГҐГ­Г­Гї
     subprocess.Popen(s).communicate()
     
 def writeLDFfile(filename,lst):
-    '''Змінює вміст файлу визначення навантаження LDF fe-safe
-    filename - імя файлу
-    lst - список рядків-даних
+    '''Г‡Г¬ВіГ­ГѕВє ГўГ¬ВіГ±ГІ ГґГ Г©Г«Гі ГўГЁГ§Г­Г Г·ГҐГ­Г­Гї Г­Г ГўГ Г­ГІГ Г¦ГҐГ­Г­Гї LDF fe-safe
+    filename - ВіГ¬Гї ГґГ Г©Г«Гі
+    lst - Г±ГЇГЁГ±Г®ГЄ Г°ГїГ¤ГЄВіГў-Г¤Г Г­ГЁГµ
     '''
     f=open(filename, "w")
     s="""
@@ -690,13 +690,13 @@ lh=0 1 , ds=1, scale=1
 lh=0 {x} , ds=2, scale=1
 END
 
-""" # шаблон файлу
-    s=s.format(x=lst[0]) # вміст файлу з шаблону
+""" # ГёГ ГЎГ«Г®Г­ ГґГ Г©Г«Гі
+    s=s.format(x=lst[0]) # ГўГ¬ВіГ±ГІ ГґГ Г©Г«Гі Г§ ГёГ ГЎГ«Г®Г­Гі
     f.write(s)
     f.close()
     
 def SF_field(s1='Step-1',s2='Step-2',Sn=207000000,m=1):
-    '''Розраховує поле коефіцієнта запасу втомної міцності за критерієм Сайнса''' 
+    '''ГђГ®Г§Г°Г ГµГ®ГўГіВє ГЇГ®Г«ГҐ ГЄГ®ГҐГґВіГ¶ВіВєГ­ГІГ  Г§Г ГЇГ Г±Гі ГўГІГ®Г¬Г­Г®Вї Г¬ВіГ¶Г­Г®Г±ГІВі Г§Г  ГЄГ°ГЁГІГҐГ°ВіВєГ¬ Г‘Г Г©Г­Г±Г ''' 
         
     S3_2 = myOdb.steps[s2].frames[-1].fieldOutputs['S'].getScalarField(invariant=MAX_PRINCIPAL)
     S3_1 = myOdb.steps[s1].frames[-1].fieldOutputs['S'].getScalarField(invariant=MAX_PRINCIPAL)
@@ -723,15 +723,15 @@ def saveDB(name):
     import shutil,os,shelve
     if not os.path.exists('MyDB'):
         os.mkdir('MyDB')
-    shutil.copyfile(model.name + '.odb', 'MyDB/'+name+'.odb')#копіювати файл
+    shutil.copyfile(model.name + '.odb', 'MyDB/'+name+'.odb')#ГЄГ®ГЇВіГѕГўГ ГІГЁ ГґГ Г©Г«
     
-    my_db = shelve.open("MyDB/mydb")#відкрити файл полиці
-    my_db[name]=[mat1,mat2,d,d_n]#записати у полицю під ключем name
-    my_db.close()#закрити файл полиці
+    my_db = shelve.open("MyDB/mydb")#ГўВіГ¤ГЄГ°ГЁГІГЁ ГґГ Г©Г« ГЇГ®Г«ГЁГ¶Ві
+    my_db[name]=[mat1,mat2,d,d_n]#Г§Г ГЇГЁГ±Г ГІГЁ Гі ГЇГ®Г«ГЁГ¶Гѕ ГЇВіГ¤ ГЄГ«ГѕГ·ГҐГ¬ name
+    my_db.close()#Г§Г ГЄГ°ГЁГІГЁ ГґГ Г©Г« ГЇГ®Г«ГЁГ¶Ві
 def readDB(name):
     import shelve
-    my_db = shelve.open("MyDB/mydb")#відкрити файл полиці
-    print my_db.keys()#вивести список усіх ключів
-    if my_db.has_key(name):#якщо є ключ name
+    my_db = shelve.open("MyDB/mydb")#ГўВіГ¤ГЄГ°ГЁГІГЁ ГґГ Г©Г« ГЇГ®Г«ГЁГ¶Ві
+    print my_db.keys()#ГўГЁГўГҐГ±ГІГЁ Г±ГЇГЁГ±Г®ГЄ ГіГ±ВіГµ ГЄГ«ГѕГ·ВіГў
+    if my_db.has_key(name):#ГїГЄГ№Г® Вє ГЄГ«ГѕГ· name
         print my_db[name]
-    my_db.close()#закрити файл полиці
+    my_db.close()#Г§Г ГЄГ°ГЁГІГЁ ГґГ Г©Г« ГЇГ®Г«ГЁГ¶Ві
