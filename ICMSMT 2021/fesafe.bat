@@ -1,0 +1,1 @@
+"c:\Program Files\Safe_Technology\fe-safe\version.6.5\exe\fe-safe_cl.exe" -s j=c:\3\Model-1.odb b=c:\3\my.stlx o=c:\3\fesafeRes.odb
