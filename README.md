@@ -1,6 +1,9 @@
 # ThreadsAbaqus
 Abaqus/CAE python scripts for modelling threaded connections of oil and gas equipment
 
+Research work ["Optimization of the parameters of threaded connections"](https://github.com/vkopey/ThreadsAbaqus/blob/master/%D0%97%D0%B2%D1%96%D1%82_%D0%A427_51-2010.pdf) (state registration number 0110U002631)
+was funded by a [grant from the President of Ukraine to support the scientific research of young scientists for 2009](https://zakon.rada.gov.ua/laws/show/336/2008-%D1%80%D0%BF#Text).
+
 If you use ThreadsAbaqus please cite the following references in your work (books, articles, reports, etc.):
 
 > Копей, В.Б. (2010) Розробляння та аналіз параметричних скінченно-елементних моделей різьбових з’єднань в Abaqus®. *Oil and Gas Power Engineering*, 1(12), 31-36. http://nge.nung.edu.ua/index.php/nge/article/view/98
