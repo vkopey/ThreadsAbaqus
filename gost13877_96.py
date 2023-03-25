@@ -107,6 +107,7 @@ def createSketch1():
     s.HorizontalConstraint(entity=g1)
     s.FixedConstraint(entity=g1)
     g2=s.Line(point1=(0.0, -15.0), point2=(0.0, 15.0))
+    s.FixedConstraint(entity=g2) # !!! בוח צüמדמ םו ןנאצ‏גאכמ ג Abaqus 6.14x64
     s.VerticalConstraint(entity=g2)
     g3=s.Line(point1=(0.0, 15.0), point2=(-20.0, 5.0))
     g4=s.Line(point1=(0.0, -15.0), point2=(-20.0, -5.0))
